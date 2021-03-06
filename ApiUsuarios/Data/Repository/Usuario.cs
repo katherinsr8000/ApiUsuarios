@@ -110,14 +110,50 @@ namespace ApiUsuarios.Data
             }
 
         }
-        public bool InsertarUsuIniciarsesionario(Iniciarsesion a)
+        public bool EditaUsuario ( string Numeroidentificacion ,  Upd_Usuario a)
+        {
+
+            IDbCommand dbTransation;
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Numeroidentificacion", Numeroidentificacion);
+            parameters.Add("@Nombre", a.Nombre);
+            parameters.Add("@Apellido", a.Apellido);
+            parameters.Add("@IdTipoIdentificacion", Convert.ToInt32(a.IdTipoIdentificacion));
+            parameters.Add("@Contrasena", a.Contrasena);
+            parameters.Add("@CorreoElectronico", a.CorreoElectronico);
+
+
+            using (IDbConnection db = GetConnection())
+            {
+                db.Open();
+
+                try
+                {
+                    string result = null;
+                    object value = db.ExecuteScalar("Usuario.Upd_Usuario",
+                        commandType: CommandType.StoredProcedure,
+                        param: parameters);
+
+                    return true;
+                    db.Close();
+                }
+                catch (Exception e)
+                {
+                    db.Close();
+                    return false;
+                    throw e;
+                }
+            }
+        }
+
+        public bool InsertarUsuIniciarsesionario( Iniciarsesion a)
         {
 
             IDbCommand dbTransation;
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@user", a.user);
             parameters.Add("@pass", a.pass);
-    
+
             using (IDbConnection db = GetConnection())
             {
                 db.Open();
@@ -136,7 +172,7 @@ namespace ApiUsuarios.Data
                     }
                     else
                     {
-                      return false;
+                        return false;
                     }
                     db.Close();
                 }

@@ -45,7 +45,7 @@ namespace ApiUsuarios.Controllers
             catch (Exception e)
             {
 
-                throw e;
+                return StatusCode(500, e);
             }
         }
         [HttpDelete]
@@ -61,7 +61,7 @@ namespace ApiUsuarios.Controllers
             catch (Exception e)
             {
 
-                throw e;
+                return StatusCode(500, e);
             }
         }
         [HttpGet]
@@ -78,6 +78,21 @@ namespace ApiUsuarios.Controllers
                 return StatusCode(500, e);
             }
         }
+        [HttpPut("{numeroidentificacion}")]
+        public IActionResult Put(string Numeroidentificacion, [FromBody] Upd_Usuario a)
+        {
+            try
+            {
+                return Ok(al.EditaUsuario(Numeroidentificacion, a));
+
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode (500 , e);
+            }
+        }
+
         [HttpPost]
         [Route("iniciarSesion")]
         public IActionResult Iniciarsesion([FromBody] Iniciarsesion a)
@@ -89,10 +104,10 @@ namespace ApiUsuarios.Controllers
             }
             catch (Exception e)
             {
-
-                throw e;
+                return StatusCode(500, e);
             }
         }
 
+       
     }
 }

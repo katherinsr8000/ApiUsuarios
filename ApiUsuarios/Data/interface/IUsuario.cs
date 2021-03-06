@@ -17,5 +17,7 @@ namespace ApiUsuarios
         Task<IEnumerable<Lst_TipoIdentificacion>> LstTipoIdentificacion();
 
         bool InsertarUsuIniciarsesionario(Iniciarsesion a);
+
+        bool EditaUsuario(string Numeroidentificacion, Upd_Usuario a);
     }
 }
